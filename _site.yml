@@ -1,0 +1,15 @@
+name: "shruti-website"
+navbar:
+  title: "Shruti Hegde"
+  left:
+    - text: "CV"
+      href: index.html
+    - text: "About"
+      href: about.html
+output:
+  html_document:
+    theme: jekyll-theme-minimal
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: styles.css
