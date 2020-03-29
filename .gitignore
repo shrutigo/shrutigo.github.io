@@ -49,3 +49,9 @@ _site/*
 *.sty
 *.pdf
 
+shruti-hegde/fonts/*
+LICENSE
+
+*cls
+*.log
+*.bib
