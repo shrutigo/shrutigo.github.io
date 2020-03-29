@@ -2,13 +2,13 @@ name: "shruti-website"
 navbar:
   title: "Shruti Hegde"
   left:
-    - text: "CV"
+    - text: "Timeline"
       href: index.html
-    - text: "About"
+    - text: "CV"
       href: about.html
 output:
   html_document:
-    theme: jekyll-theme-minimal
+    theme: cosmo
     highlight: textmate
     include:
       after_body: footer.html

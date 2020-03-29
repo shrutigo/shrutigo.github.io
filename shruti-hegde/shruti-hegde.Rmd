@@ -1,0 +1,145 @@
+---
+name: Shruti Hegde
+position: ""
+address: "Department of Chemical Engineering, University of Utah"
+phone: +1 385 282 9438
+www: shrutigo.github.io
+email: shruti.hegde@utah.edu
+aboutme: ""
+date: "`r format(Sys.time(), '%B %Y')`"
+headcolor: 890013
+output:
+  vitae::moderncv:
+    theme: casual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(vitae)
+library(tidyverse)
+library(lubridate)
+library(here)
+library(readxl)
+library(glue)
+```
+
+
+# Education
+
+```{r education}
+edu.raw <- read_csv(here("data", "edu.csv"))
+edu <-
+  edu.raw %>% 
+  mutate(pi = if_else(!is.na(pi), glue("Advisor: {pi}"), as.character(NA)),
+         dissertation = glue("\\textbf{[dissertation]}", .open = "[", .close = "]")) %>% 
+  gather(dissertation, pi, key = "whytype", value = "why")
+
+detailed_entries(edu, 
+                 when = glue("{date}"),
+                 what = degree,
+                 where = location,
+                 with = university,
+                 why = why,
+                 .protect = FALSE)
+```
+
+
+
+
+# Research Experience
+
+```{r experience, inclue=FALSE}
+jobs.raw <- read_csv(here::here("data", "jobs.csv"))
+jobs <-
+  jobs.raw %>% 
+  fill(Start, End, What, With, Where) %>%  
+  mutate(When = case_when(
+    is.na(End) ~ glue("{Start}--Present"),
+    TRUE ~ glue("{Start}--{End}")
+  )) %>% 
+  mutate(date_to_order = if_else(is.na(End), today() + years(2), as.Date(parse_date_time2(End, "my"))) )
+
+jobs %>% 
+  arrange(desc(date_to_order)) %>% 
+  detailed_entries(
+    what = What,
+    when = When,
+    with = With,
+    where = Where,
+    why = Why,
+    .protect = FALSE
+  )
+  
+```
+
+
+# Technical Skills 
+
+```{r skills}
+skills.raw <- read_tsv(here::here("data", "skills.tsv"), col_names=FALSE)
+colnames(skills.raw) <- c("skill_type", "skills")
+skills.raw %>%
+  detailed_entries(what = skill_type, why = skills)
+```
+
+
+
+# Publications
+```{r publications}
+scholar::get_publications("BL5HwQ0AAAAJ", flush = TRUE) %>%
+  arrange(desc(year)) %>%
+  detailed_entries(
+    what = title,
+    when = year,
+    with = author,
+    where = journal
+  )
+```
+
+# Presentations
+
+## Research Talks
+
+```{r research-talks}
+presentations.raw <- read_csv(here("data", "presentations.csv"))
+
+
+presentations.raw %>% 
+  filter(Tag == "Presentation") %>%
+  detailed_entries(what = Title,
+                   when = When,
+                   with = Conference,
+                   where = Location,
+                   why = Award)
+```
+
+## Posters
+
+```{r posters}
+presentations.raw %>% 
+  filter(Tag == "Poster") %>%
+  detailed_entries(what = Title,
+                   when = When,
+                   with = Conference,
+                   where = Location,
+                   why = Award)
+```
+
+
+# Teaching Experience
+
+
+```{r teaching}
+data.frame(
+  when = c("08/2017-12/2017"),
+  what = c("Chemical Engineering Tutor"),
+  why = c("Course Taught: Thermodynamics II", "Guest lectures on thermodynamic cycles and energy systems")
+) %>%
+detailed_entries(
+  when = when,
+  what = what,
+  why = why 
+)
+```
+
