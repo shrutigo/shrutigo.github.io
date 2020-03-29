@@ -45,3 +45,7 @@ vignettes/*.pdf
 .DS_Store
 _site/*
 *.Rproj
+
+*.sty
+*.pdf
+
