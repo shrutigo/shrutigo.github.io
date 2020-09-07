@@ -13,13 +13,15 @@ education <- function(){
            dissertation = glue("\\textbf{[dissertation]}", .open = "[", .close = "]")) %>% 
     gather(dissertation, pi, key = "whytype", value = "why")
   
-  detailed_entries(edu, 
+  return(
+    detailed_entries(edu, 
                    when = glue("{date}"),
                    what = degree,
                    where = location,
                    with = university,
                    why = why,
                    .protect = FALSE)
+  )
 }
 
 
@@ -34,7 +36,8 @@ jobs <- function(){
     )) %>% 
     mutate(date_to_order = if_else(is.na(End), today() + years(2), as.Date(parse_date_time2(End, "my"))) )
   
-  jobs %>% 
+  return(
+    jobs %>% 
     arrange(desc(date_to_order)) %>% 
     detailed_entries(
       what = What,
@@ -43,58 +46,70 @@ jobs <- function(){
       where = Where,
       why = Why,
       .protect = FALSE
-    )  
+    )
+  )
 }
 
 publications <- function(){
-  scholar::get_publications("BL5HwQ0AAAAJ", flush = TRUE) %>%
-    arrange(desc(year)) %>%
-    detailed_entries(
-      what = title,
-      with = author,
-      where = journal
-    )
+  return(
+    scholar::get_publications("BL5HwQ0AAAAJ", flush = TRUE) %>%
+      arrange(desc(year)) %>%
+      detailed_entries(
+        what = title,
+        with = author,
+        where = journal
+      )
+  )
+  
 }
 
 skills <- function(){
   skills_raw <- read_tsv(here::here("data", "skills.tsv"), col_names=FALSE)
   colnames(skills_raw) <- c("skill_type", "skills")
-  skills_raw %>%
-    detailed_entries(what = skill_type, why = skills) 
+  return(
+    skills_raw %>%
+      detailed_entries(what = skill_type, why = skills) 
+  )
 }
 
 presentations <- function(type){
   presentations_raw <- read_csv(here("data", "presentations.csv"))
   
   if(type == 'research'){
-    presentations_raw %>% 
-      filter(Tag == "Presentation") %>%
-      detailed_entries(what = Title,
-                       when = When,
-                       with = Conference,
-                       where = Location,
-                       why = Award)
+    return(
+      presentations_raw %>% 
+        filter(Tag == "Presentation") %>%
+        detailed_entries(what = Title,
+                         when = When,
+                         with = Conference,
+                         where = Location,
+                         why = Award)
+    )
   }else{
-    presentations_raw %>% 
-      filter(Tag == "Poster") %>%
-      detailed_entries(what = Title,
-                       when = When,
-                       with = Conference,
-                       where = Location,
-                       why = Award) 
+    return(
+      presentations_raw %>% 
+        filter(Tag == "Poster") %>%
+        detailed_entries(what = Title,
+                         when = When,
+                         with = Conference,
+                         where = Location,
+                         why = Award)
+    ) 
   }
 }
 
 teaching <- function(){
-  data.frame(
-    when = c("08/2017-12/2017"),
-    what = c("Chemical Engineering Tutor"),
-    why = c("Course Taught: Thermodynamics II", "Guest lectures on thermodynamic cycles and energy systems")
-  ) %>%
-    detailed_entries(
-      when = when,
-      what = what,
-      why = why 
-    )
+  return(
+    data.frame(
+      when = c("08/2017-12/2017"),
+      what = c("Chemical Engineering Tutor"),
+      why = c("Course Taught: Thermodynamics II", "Guest lectures on thermodynamic cycles and energy systems")
+    ) %>%
+      detailed_entries(
+        when = when,
+        what = what,
+        why = why 
+      )
+  )
 }
 
