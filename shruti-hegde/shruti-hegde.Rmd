@@ -1,0 +1,70 @@
+---
+name: Shruti Hegde
+position: ""
+address: "Department of Chemical Engineering, University of Utah"
+phone: +1 385 282 9438
+www: shrutigo.github.io
+email: shruti.hegde@utah.edu
+aboutme: ""
+date: "`r format(Sys.time(), '%B %Y')`"
+headcolor: 890013
+output:
+  vitae::moderncv:
+    theme: casual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+source("cv.R", local = knitr::knit_global())
+
+```
+
+
+# Education
+
+```{r education}
+education()
+```
+
+
+# Research Experience
+
+```{r experience, inclue=FALSE}
+jobs()
+```
+
+
+# Technical Skills 
+
+```{r skills}
+skills()
+```
+
+
+# Publications
+```{r publications}
+publications()
+```
+
+
+# Presentations
+
+## Research Talks
+
+```{r research-talks}
+presentations(type='research')
+```
+
+## Posters
+
+```{r posters}
+presentations(type='posters')
+```
+
+
+# Teaching Experience
+
+
+```{r teaching}
+teaching()
+```

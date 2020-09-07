@@ -37,3 +37,21 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+_site/*
+*.Rproj
+
+*.sty
+*.pdf
+
+shruti-hegde/fonts/*
+LICENSE
+
+*cls
+*.log
+*.bib
