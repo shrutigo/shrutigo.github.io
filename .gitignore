@@ -47,7 +47,7 @@ _site/*
 *.Rproj
 
 *.sty
-*.pdf
+shruti-hegde/*.pdf
 
 shruti-hegde/fonts/*
 LICENSE
